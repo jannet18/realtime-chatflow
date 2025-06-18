@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run start:frontend\"",
-    "server": "node server/index.js",
-    "dev": "nodemon server/index.js",
-    "start:frontend": "npm --prefix frontend run dev && frontend run build"
+    "dev:": "concurrently \"npm run server\" \"npm run start:frontend\"",
+    "server": "nodemon server/index.js",
+    "start:frontend": "npm --prefix frontend run dev",
+    "build": "npm run frontend:build",
+    "frontend": "npm --prefix frontend run build",
+    "start": "node server/index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,7 @@
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cloudinary": "^1.41.3",
+    "concurrently": "^9.1.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
@@ -26,7 +29,6 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10",
-    "concurrently": "^9.1.2"
+    "nodemon": "^3.1.10"
   }
 }
