@@ -8,6 +8,7 @@ import ProfilePhotoSelector from "../../inputs/ProfilePhotoSelector";
 import uploadImage from "../../../utils/uploadImage";
 import Input from "../../inputs/Input";
 import { useAuth } from "../../context/UserContext";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -54,11 +55,14 @@ const Signup = () => {
       );
       if (response?.data) {
         setUser(user);
-        console.log(response.data);
+        // console.log(response.data);
         navigate("/dashboard");
+        toast.success("Account created successfully!");
       }
     } catch (error) {
+      const message = error.response.message || error.response;
       setError("Something went wrong. Please try again later.", error);
+      toast.error(message);
     }
   };
 

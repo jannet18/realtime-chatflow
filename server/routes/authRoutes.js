@@ -15,7 +15,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/getUser", authMiddleware, getUser);
 router.get("/getUser", authMiddleware, getUser);
-router.get("/update-profile", authMiddleware, updateProfile);
+router.put("/update-profile", authMiddleware, updateProfile);
 router.post("/logout", logoutUser);
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file || !req.file.path) {

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_URLS } from "../../utils/apiPath";
+import toast from "react-hot-toast";
 
 export const UserContext = createContext();
 
@@ -23,6 +24,7 @@ export const UserProvider = ({ children }) => {
       }
     } catch (error) {
       setUser(null);
+      toast.error(error.response.message);
     } finally {
       setLoading(false);
     }
@@ -37,8 +39,10 @@ export const UserProvider = ({ children }) => {
     try {
       await axiosInstance.post(API_URLS.AUTH.LOGOUT);
       setUser(null);
+      toast.success("Logout successful!");
     } catch (error) {
-      console.error("Logout failed.", error);
+      // console.error("Logout failed.", error);
+      toast.error("Logout failed!", error);
     }
   };
 
@@ -50,23 +54,44 @@ export const UserProvider = ({ children }) => {
         updatedUser
       );
       setUser(response.data);
+      toast.success("User updated!");
       return { success: true };
     } catch (error) {
-      console.error("Failed to update user:", error);
+      toast.error("Failed to update user:", error);
       return {
         sucess: false,
         messgae: error.response.data.message || "Update failed.",
       };
     }
   };
+
+  const updateProfile = async (data) => {
+    try {
+      const response = await axiosInstance.put(
+        API_URLS.AUTH.UPDATE_PROFILE,
+        data,
+        { withCredentials: true }
+      );
+      setUser({ isUpdatingProfile: response.data });
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      console.log("Error updating profile:", error);
+      toast.error("Error updating profile:", error.response?.message);
+    } finally {
+      setUser({ isUpdatingProfile: true });
+    }
+  };
+
   const value = {
     user,
     loading,
     fetchUser,
     setUser,
     isAuthenticated: !!user,
+    isUpdatingProfile: !!user,
     clearUser,
     updateUser,
+    updateProfile,
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

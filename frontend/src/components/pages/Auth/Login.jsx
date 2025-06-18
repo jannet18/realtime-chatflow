@@ -4,6 +4,7 @@ import { API_URLS } from "../../../utils/apiPath";
 import { useAuth } from "../../context/UserContext";
 import Input from "../../inputs/Input";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -28,10 +29,12 @@ const Login = () => {
       if (response?.data) {
         setUser(user);
         navigate("/dashboard");
+        toast.success("Login successfully!");
       }
     } catch (error) {
       const message = error?.response?.data.message || error?.message;
       setError(message);
+      toast.error(message);
     }
   };
 
