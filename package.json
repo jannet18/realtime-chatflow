@@ -6,7 +6,7 @@
     "start": "concurrently \"npm run server\" \"npm run start:frontend\"",
     "server": "node server/index.js",
     "dev": "nodemon server/index.js",
-    "start:frontend": "npm --prefix frontend run dev && build"
+    "start:frontend": "npm --prefix frontend run dev"
   },
   "keywords": [],
   "author": "",
