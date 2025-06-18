@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "node server/index.js"
+    "start:frontend": "npm --prefix frontend run dev",
+    "start:realtime-chat": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "start": "concurrently \"npm run start:realtime-chat\" \"npm run start:frontend\""
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,7 @@
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cloudinary": "^1.41.3",
+    "concurrently": "^9.1.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
