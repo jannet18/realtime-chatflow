@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:frontend": "npm --prefix frontend npm install && npm run build",
-    "start:realtime-chat": "node server/index.js",
+    "start": "concurrently \"npm run server\" \"npm run start:frontend\"",
+    "server": "node server/index.js",
     "dev": "nodemon server/index.js",
-    "start": "concurrently \"npm run start:realtime-chat\" \"npm run start:frontend\""
+    "start:frontend": "npm --prefix frontend run dev && build"
   },
   "keywords": [],
   "author": "",

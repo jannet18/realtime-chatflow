@@ -1,13 +1,13 @@
 import axios from "axios";
-import { VITE_BASE_URL } from "./apiPath";
+import { API_BASE_URL } from "./apiPath";
 
 const axiosInstance = axios.create({
-  baseURL: VITE_BASE_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-    withCredentials: true,
+    // withCredentials: true,
   },
 });
 
