@@ -72,13 +72,13 @@ export const UserProvider = ({ children }) => {
         data,
         { withCredentials: true }
       );
-      setUser({ isUpdatingProfile: response.data });
+      user({ isUpdatingProfile: response.data });
       toast.success("Profile updated successfully!");
     } catch (error) {
       console.log("Error updating profile:", error);
       toast.error("Error updating profile:", error.response?.message);
     } finally {
-      setUser({ isUpdatingProfile: true });
+      user({ isUpdatingProfile: true });
     }
   };
 
