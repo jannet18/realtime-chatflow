@@ -3,7 +3,7 @@ import React from "react";
 import Signup from "../Auth/Signup";
 import AuthImagePattern from "../../../layout/AuthImagePattern";
 
-function Dashbord() {
+function Dashboard() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-gray-800">
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
@@ -30,4 +30,4 @@ function Dashbord() {
   );
 }
 
-export default Dashbord;
+export default Dashboard;

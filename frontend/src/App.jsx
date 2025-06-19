@@ -1,6 +1,5 @@
 import { Settings } from "lucide-react";
 import { useAuth } from "./components/context/UserContext";
-import useUserAuth from "./components/hooks/useUserAuth";
 import Login from "./components/pages/Auth/Login";
 import Profile from "./components/pages/Auth/Profile";
 import Signup from "./components/pages/Auth/Signup";
@@ -9,9 +8,10 @@ import Navbar from "./components/pages/Dashboard/Navbar";
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
+import ProtectedRoute from "./components/pages/Auth/ProtectedRoute";
 
 function App() {
-  // useUserAuth();
+  useAuth();
   return (
     <>
       <Navbar />
@@ -21,7 +21,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<Home />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );

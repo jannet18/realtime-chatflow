@@ -1,34 +1,43 @@
-import React, { useEffect } from "react";
-import { useAuth } from "../context/UserContext";
-import axiosInstance from "../../utils/axiosInstance";
-import { API_URLS } from "../../utils/apiPath";
+// import React, { useEffect } from "react";
+// import { useAuth } from "../context/UserContext";
+// import axiosInstance from "../../utils/axiosInstance";
+// import { API_URLS } from "../../utils/apiPath";
+// import toast from "react-hot-toast";
 
-async function useUserAuth() {
-  useEffect(() => {
-    const { user, setUser } = useAuth();
+// function useAuth() {
+//   const { setUser } = useAuth();
 
-    let isMounted = true;
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get(API_URLS.AUTH.GET_USER, {
-          withCredentials: true,
-        });
+//   useEffect(() => {
+//     let isMounted = true;
 
-        if (isMounted && response.data) {
-          console.log(response.data);
-          setUser(user);
-        }
-      } catch (error) {
-        if (error) {
-          const message = error.response.data || error.response.data;
-          setError(message);
-        }
-      }
-    };
-    fetchUser();
-  }, []);
+//     const fetchUser = async () => {
+//       try {
+//         const response = await axiosInstance.get(API_URLS.AUTH.GET_USER, {
+//           withCredentials: true,
+//         });
 
-  return <div>useUserAuth</div>;
-}
+//         if (isMounted && response.data) {
+//           console.log(response.data);
+//           setUser(response.data);
+//           toast.success("Success");
+//         }
+//       } catch (error) {
+//         if (error) {
+//           console.error(
+//             "Failed to fetch user:",
+//             error.response?.data || error.message
+//           );
+//           const message = error.response.data || error.response.data;
+//           toast.error(message);
+//         }
+//       }
+//     };
 
-export default useUserAuth;
+//     fetchUser();
+//     return () => {
+//       isMounted = false;
+//     };
+//   }, [setUser]);
+// }
+
+// export default useUserAuth;

@@ -5,7 +5,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
-
+const messageRoutes = require("./routes/messageRoutes");
 const app = express();
 app.use(express.json());
 
@@ -19,6 +19,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 connectDB();
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/messages", messageRoutes);
 
 // Serve static files from frontend build
 const frontendPath = path.resolve(__dirname, "..", "frontend", "dist");

@@ -1,7 +1,5 @@
 export const API_BASE_URL =
-  import.meta.env.MODE === "development"
-    ? "/api"
-    : import.meta.env.API_BASE_URL;
+  import.meta.env.MODE === "development" ? "" : import.meta.env.API_BASE_URL;
 
 export const API_URLS = {
   AUTH: {
@@ -14,5 +12,13 @@ export const API_URLS = {
   },
   IMAGE: {
     UPLOAD_IMAGE: "/api/v1/auth/upload-image",
+  },
+  MESSAGES: {
+    GET_ALL_USERS: "/api/v1/messages/users",
+    GET_USER_MESSAGES: (userId) => `/api/v1/messages/${userId}`,
+    SENT_MESSAGE: "/api/v1/auth/send-message",
+    // UPDATE_PROFILE: "/api/v1/auth/update-profile",
+    // UPDATE_USER: "/api/v1/auth/updateUser",
+    // LOGOUT: "/api/v1/auth/logout",
   },
 };

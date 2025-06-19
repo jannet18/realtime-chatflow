@@ -32,7 +32,7 @@ const Login = () => {
         toast.success("Login successfully!");
       }
     } catch (error) {
-      const message = error?.response?.data.message || error?.message;
+      const message = error?.response?.data?.message || error?.message;
       setError(message);
       toast.error(message);
     }

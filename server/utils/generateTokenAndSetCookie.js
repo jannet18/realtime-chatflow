@@ -7,7 +7,7 @@ const generateTokenAndSetCookie = async (res, userId) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
-    res.cookie("jwt", token, {
+    res.cookie("token", token, {
       httpOnly: true, //prevents XSS attacks cross-site scripting attacks
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict", // CSRF attacks cross-site request forgery attacks

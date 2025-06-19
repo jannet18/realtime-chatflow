@@ -13,27 +13,58 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  //   Fetch user on page load
   const fetchUser = async () => {
+    let isMounted = true;
     try {
       const response = await axiosInstance.get(API_URLS.AUTH.GET_USER, {
         withCredentials: true,
       });
-      if (response.data) {
+
+      if (isMounted && response.data) {
+        console.log(response.data);
         setUser(response.data);
+        toast.success("Success");
       }
     } catch (error) {
-      setUser(null);
-      toast.error(error.response.message);
-    } finally {
-      setLoading(false);
+      if (error) {
+        console.error(
+          "Failed to fetch user:",
+          error.response?.data || error.message
+        );
+        const message = error.response?.data || error.response?.data;
+        toast.error(message);
+      }
     }
-
-    // Call user once on mount
-    useEffect(() => {
-      fetchUser();
-    }, []);
   };
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchUser();
+    return () => {
+      isMounted = false;
+    };
+  }, [setUser]);
+  // //   Fetch user on page load
+  // const fetchUser = async () => {
+  //   try {
+  //     const response = await axiosInstance.get(API_URLS.AUTH.GET_USER, {
+  //       withCredentials: true,
+  //     });
+  //     if (response.data) {
+  //       setUser(response.data);
+  //     }
+  //   } catch (error) {
+  //     setUser(null);
+  //     toast.error(error?.response?.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // // Call user once on mount
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
+
   // Logout
   const clearUser = async () => {
     try {
@@ -72,13 +103,13 @@ export const UserProvider = ({ children }) => {
         data,
         { withCredentials: true }
       );
-      user({ isUpdatingProfile: response.data });
+      setUser(response.data);
       toast.success("Profile updated successfully!");
     } catch (error) {
       console.log("Error updating profile:", error);
       toast.error("Error updating profile:", error.response?.message);
     } finally {
-      user({ isUpdatingProfile: true });
+      setUser((prev) => ({ ...prev, isUpdatingProfile: true }));
     }
   };
 

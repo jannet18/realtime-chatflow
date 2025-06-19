@@ -10,5 +10,5 @@ const router = express.Router();
 
 router.get("/users", authMiddleware, getSidebarUsers);
 router.get("/:id", authMiddleware, getMessages);
-router.post("", authMiddleware, sendMessage);
+router.post("/send-message", authMiddleware, sendMessage);
 module.exports = router;

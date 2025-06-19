@@ -61,23 +61,29 @@ const loginUser = async (req, res) => {
     });
   }
 };
-const logoutUser = async (res) => {
+const logoutUser = async (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
-    res.status(201).json({ message: "Logged out successfully!" });
-    return;
+    res.cookie("token", "", {
+      maxAge: 0,
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    return res.status(201).json({ message: "Logged out successfully!" });
   } catch (error) {
     console.error(
       "Something went wrong. Please try again later.",
       error.message
     );
-    res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 const getUser = async (req, res) => {
   try {
-    res.status(201).json(req.user);
-    return;
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.json(user);
   } catch (error) {
     console.error(
       "Something went wrong. Please try again later.",
@@ -85,6 +91,16 @@ const getUser = async (req, res) => {
     );
     res.status(500).json({ message: "Internal Server Error" });
   }
+  // try {
+  //   res.status(201).json(req.user);
+  //   return;
+  // } catch (error) {
+  //   console.error(
+  //     "Something went wrong. Please try again later.",
+  //     error.message
+  //   );
+  //   res.status(500).json({ message: "Internal Server Error" });
+  // }
 };
 
 const updateProfile = async (req, res) => {

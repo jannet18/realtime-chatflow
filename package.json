@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev:": "concurrently \"npm run server\" \"npm run frontend\"",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
     "server": "nodemon server/index.js",
     "frontend": "npm --prefix frontend run dev",
     "frontend:install": "npm --prefix frontend install",
