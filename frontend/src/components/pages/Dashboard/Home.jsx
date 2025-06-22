@@ -19,7 +19,7 @@ function Home() {
           </div>
         </div>
         <UsersLayout />
-        {/* {!selectedUser ? <></> : <></>} */}
+        {!selectedUser ? <></> : <></>}
       </div>
       <MainLayout />
     </div>

@@ -39,7 +39,9 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     let isMounted = true;
+    // if (isAuthenticated) {
     fetchUser();
+    // }
     return () => {
       isMounted = false;
     };

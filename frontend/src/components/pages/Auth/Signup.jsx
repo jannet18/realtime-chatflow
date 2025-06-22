@@ -32,7 +32,7 @@ const Signup = () => {
       setError("Please enter your email.");
       return;
     }
-    if (!fullName) {
+    if (!password) {
       setError("Please enter your password.");
       return;
     }

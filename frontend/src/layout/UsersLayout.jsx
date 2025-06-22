@@ -5,6 +5,7 @@ import { useMessage } from "../components/context/messageContext";
 function UsersLayout() {
   const {
     getUsers,
+    getMessages,
     users = [],
     selectedUser,
     setSelectedUser,
@@ -14,6 +15,7 @@ function UsersLayout() {
   const onlineUsers = [];
   useEffect(() => {
     getUsers();
+    getMessages();
   }, []);
 
   if (loading) return <>Loading</>;
