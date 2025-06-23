@@ -30,6 +30,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "daisyui": "^5.0.43",
     "nodemon": "^3.1.10"
   }
 }

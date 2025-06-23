@@ -1,4 +1,3 @@
-import { Settings } from "lucide-react";
 import { useAuth } from "./components/context/UserContext";
 import Login from "./components/pages/Auth/Login";
 import Profile from "./components/pages/Auth/Profile";
@@ -9,11 +8,14 @@ import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
 import ProtectedRoute from "./components/pages/Auth/ProtectedRoute";
+import { useTheme } from "./components/context/themeContext";
+import Settings from "./components/pages/Auth/Settings";
 
 function App() {
   useAuth();
+  const { theme } = useTheme();
   return (
-    <>
+    <div data-theme="cupcake">
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
@@ -30,7 +32,7 @@ function App() {
           }
         />
       </Routes>
-    </>
+    </div>
   );
 }
 

@@ -12,6 +12,7 @@ export const useAuth = () => {
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const fetchUser = async () => {
     let isMounted = true;
@@ -99,19 +100,21 @@ export const UserProvider = ({ children }) => {
   };
 
   const updateProfile = async (data) => {
+    setLoading(true);
     try {
       const response = await axiosInstance.put(
         API_URLS.AUTH.UPDATE_PROFILE,
         data,
         { withCredentials: true }
       );
-      setUser(response.data);
+      setUser(response?.data);
       toast.success("Profile updated successfully!");
     } catch (error) {
       console.log("Error updating profile:", error);
       toast.error("Error updating profile:", error.response?.message);
     } finally {
-      setUser((prev) => ({ ...prev, isUpdatingProfile: true }));
+      setUser((prev) => ({ ...prev, loading: true }));
+      setLoading(false);
     }
   };
 
@@ -120,6 +123,9 @@ export const UserProvider = ({ children }) => {
     loading,
     fetchUser,
     setUser,
+    onlineUsers,
+    setOnlineUsers,
+    setLoading,
     isAuthenticated: !!user,
     isUpdatingProfile: !!user,
     clearUser,

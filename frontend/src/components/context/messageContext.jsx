@@ -44,6 +44,19 @@ export const MessageProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  const sendMessage = async (messageData) => {
+    // const { selectedUser, messages } = getMessages();
+    try {
+      const res = await axiosInstance.post(
+        `/messages/send/${selectedUser._id}`,
+        messageData
+      );
+      set({ messages: [...messages, res.data] });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
   // todo: optimize later
   useEffect(() => {
     if (selectedUser) {
@@ -57,6 +70,7 @@ export const MessageProvider = ({ children }) => {
         messages,
         users,
         selectedUser,
+        sendMessage,
         setMessages,
         getMessages,
         getUsers,
