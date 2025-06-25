@@ -8,31 +8,35 @@ import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
 import ProtectedRoute from "./components/pages/Auth/ProtectedRoute";
-import { useTheme } from "./components/context/themeContext";
+// import { useTheme } from "./components/context/themeContext";
 import Settings from "./components/pages/Auth/Settings";
+import { SocketProvider } from "./components/context/socketContext";
 
 function App() {
   useAuth();
-  const { theme } = useTheme();
+
+  // const { theme } = useTheme();
   return (
-    <div data-theme="cupcake">
-      <Navbar />
-      <Routes>
-        <Route exact path="/" element={<Dashboard />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </div>
+    <SocketProvider>
+      <div data-theme="cupcake">
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Dashboard />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
+    </SocketProvider>
   );
 }
 

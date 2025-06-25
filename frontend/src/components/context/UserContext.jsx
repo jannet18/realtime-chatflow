@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_URLS } from "../../utils/apiPath";
 import toast from "react-hot-toast";
+import { useSocket } from "./socketContext";
 
 export const UserContext = createContext();
 
@@ -13,6 +14,8 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [onlineUsers, setOnlineUsers] = useState([]);
+
+  const socket = useSocket();
 
   const fetchUser = async () => {
     let isMounted = true;
@@ -47,27 +50,16 @@ export const UserProvider = ({ children }) => {
       isMounted = false;
     };
   }, [setUser]);
-  // //   Fetch user on page load
-  // const fetchUser = async () => {
-  //   try {
-  //     const response = await axiosInstance.get(API_URLS.AUTH.GET_USER, {
-  //       withCredentials: true,
-  //     });
-  //     if (response.data) {
-  //       setUser(response.data);
-  //     }
-  //   } catch (error) {
-  //     setUser(null);
-  //     toast.error(error?.response?.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  // // Call user once on mount
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
 
+  useEffect(() => {
+    if (user && socket && !socket.connected) {
+      socket.connect();
+      socket.emit("authenticated", { userId: user.id, token: user.token });
+    } else if (!user && socket && socket.connected) {
+      socket.disconnect();
+    }
+  }, [socket, user]);
+  // Fetch user on page load
   // Logout
   const clearUser = async () => {
     try {
